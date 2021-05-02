@@ -44,7 +44,14 @@ function Login() {
             border-gray-primary rounded mb-2"
             onChange={({ target }) => setPassword(target.value)}
           />
-          <button disabled={isInvalid} type="submit" className="bg-blue-medium text-white" />
+          <button
+            disabled={isInvalid}
+            type="submit"
+            className={`bg-blue-500 text-white w-full rounded h-8 font-bold 
+          ${isInvalid && 'opacity-50'}`}
+          >
+            Login
+          </button>
         </form>
       </div>
     </div>
