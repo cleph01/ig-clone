@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import FirebaseContext from '../context/firebase';
 
 function Login() {
@@ -22,7 +22,7 @@ function Login() {
         <img src="/images/iphone-with-profile.jpeg" alt="iPhone with Instagram" />
       </div>
       <div className="flex flex-col w-2/5">
-        <div className="flex flex-col items-center bg-white p-4 border border-gray-primary mb-4">
+        <div className="flex flex-col items-center bg-white p-4 border border-gray-primary mb-4 rounded">
           <h1 className="flex justify-center w-full">
             <img src="/images/logo.png" alt="Instagram" className="mt-s w-6/12 mb-4" />
           </h1>
@@ -57,9 +57,14 @@ function Login() {
         </div>
         <div
           className="flex justify-center items-center flex-col w-full bg-white p-4 border 
-      border-gray-primary"
+      border-gray-primary rounded"
         >
-          <p className="test-sm">Don't have an account?</p>
+          <p className="test-sm">
+            Don't have an account?{' '}
+            <Link to="/signup" className="font-bold text-blue-medium">
+              Sign up
+            </Link>
+          </p>
         </div>
       </div>
     </div>
