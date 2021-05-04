@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import FirebaseContext from '../context/firebase';
-import * as ROUTES from '../constants/routes';
 
 function Signup() {
   const history = useHistory();
@@ -46,6 +45,7 @@ function Signup() {
               className="text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border 
             border-gray-primary rounded mb-2"
               onChange={({ target }) => setUsername(target.value)}
+              value={username}
             />
             <input
               aria-label="Enter your full name"
@@ -54,6 +54,7 @@ function Signup() {
               className="text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border 
             border-gray-primary rounded mb-2"
               onChange={({ target }) => setFullName(target.value)}
+              value={fullName}
             />
             <input
               aria-label="Enter your email address"
@@ -62,6 +63,7 @@ function Signup() {
               className="text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border 
             border-gray-primary rounded mb-2"
               onChange={({ target }) => setEmailAddress(target.value)}
+              value={emailAddress}
             />
             <input
               aria-label="Enter your password"
@@ -70,6 +72,7 @@ function Signup() {
               className="text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border 
             border-gray-primary rounded mb-2"
               onChange={({ target }) => setPassword(target.value)}
+              value={password}
             />
             <button
               disabled={isInvalid}
@@ -88,7 +91,7 @@ function Signup() {
           <p className="test-sm">
             Have an account?{' '}
             <Link to="/login" className="font-bold text-blue-medium">
-              Sign up
+              Login
             </Link>
           </p>
         </div>
