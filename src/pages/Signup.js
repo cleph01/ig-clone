@@ -1,6 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import FirebaseContext from '../context/firebase';
+import { doesUsernameExist } from '../services/firebase';
+import * as ROUTES from '../constants/routes';
 
 function Signup() {
   const history = useHistory();
@@ -14,11 +16,45 @@ function Signup() {
   const [error, setError] = useState('');
   const isInvalid = password === '' || emailAddress === '';
 
-  const handleLogin = async (event) => {
+  const handleSignup = async (event) => {
     event.preventDefault();
 
-    // try {
-    // } catch (error) {}
+    const usernameExists = await doesUsernameExist(username);
+
+    if (!usernameExists.length) {
+      try {
+        const createdUserResult = await firebase
+          .auth()
+          .createdUserWithEmailAndPassword(emailAddress, password);
+
+        // authentication
+        // -> emailAddress & password
+        // -> -> authentication is then updated
+        //        to include username (aka display name)
+        await createdUserResult.user.updateProfile({
+          displayName: username
+        });
+
+        // firebase user collection (create a document)
+        await firebase.firestore().collection('user').add({
+          userId: createdUserResult.user.uid,
+          username: username.toLowerCase(),
+          fullName,
+          emailAddress: emailAddress.toLowerCase(),
+          following: [],
+          dateCreated: Date.now()
+        });
+
+        history.push(ROUTES.DASHBOARD);
+      } catch (error) {
+        setFullName('');
+        setEmailAddress('');
+        setPassword('');
+        setError(error.message);
+      }
+    } else {
+      setError('That Username is already taken, please try another');
+    }
   };
 
   useEffect(() => {
@@ -37,7 +73,7 @@ function Signup() {
           </h1>
           {error && <p className="mb-4 text-xs text-red-primary">{error}</p>}
 
-          <form onSubmit={handleLogin} method="POST">
+          <form onSubmit={handleSignup} method="POST">
             <input
               aria-label="Enter your username"
               type="text"
